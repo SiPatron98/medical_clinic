@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
+    <title>ZajavMED Medical Clinic</title>
+    <script>
+        function showOccupiedDates(){
+            document.getElementById("doctorIds").value ="true";
+            alert("You selected : " + document.getElementById("doctorIds").value);
+            document.deliveryForm.submit();
+
+        }
+    </script>
+
+</head>
+
+<body>
+<div class="container">
+    <h1>New Appointment</h1>
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <a th:href="@{/}" class="btn btn-info" role="button">Main page</a>
+        </div>
+    </div>
+    <br>
+    <form action="#" th:action="@{/new_appointment/new}" method="POST">
+        <p>Appointment for:
+            <select id="pesels" th:name="pesel">
+                <option th:each="pesel : ${allPesels}" th:value="${pesel}" th:text="${pesel}"></option>
+            </select>
+        </p>
+        <br>
+        <p>Choose a doctor:
+            <select id="doctorIds" th:name="doctorIds">
+                <option th:each="doctorId : ${doctorIds}" th:value="${doctorId}" th:text="${doctorId}"></option>
+            </select>
+        </p>
+        <br>
+        <table class="table">
+            <thead class="table-dark">
+            <tr>
+                <th>idNumber</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="appointment : ${futurePatientAppointments}">
+                <td th:text="${appointment.idNumber}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <p>Choose your date: </p>
+        <br>
+
+
+    </form>
+</div>
+</body>
+
+</html>

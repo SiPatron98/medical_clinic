@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
+    <title>ZajavMED Medical Clinic</title>
+</head>
+
+<body>
+<div class="container">
+    <h1>Patient Panel</h1>
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <a th:href="@{/}" class="btn btn-info" role="button">Go back to the main page</a>
+        </div>
+    </div>
+    <form action="#" th:action="@{/patient}" method="GET">
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <select id="pesels" th:name="pesel">
+                            <option th:each="pesel : ${allPesels}" th:value="${pesel}" th:text="${pesel}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="submit" value="Find!" class="btn btn-success">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <br>
+    <div class="row mt-3">
+        <p>Appointments for: <b><span th:text="${pesel} + ' ' + ${patient.name} + ' ' + ${patient.surname}">Patient pesel</span></b></p>
+        <h6>Future appointments:</h6>
+        <table class="table">
+            <thead class="table-dark">
+            <tr>
+                <th>idNumber</th>
+                <th>dateTime</th>
+                <th>note</th>
+                <th>doctor_name</th>
+                <th>doctor_surname</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="appointment : ${futurePatientAppointments}">
+                <td th:text="${appointment.idNumber}"></td>
+                <td th:text="${appointment.dateTime}"></td>
+                <td th:text="${appointment.note}"></td>
+                <td th:text="${appointment.doctor.name}"></td>
+                <td th:text="${appointment.doctor.surname}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <br>
+    <h6>Past appointments:</h6>
+    <div class="row mt-3">
+        <table class="table">
+            <thead class="table-dark">
+            <tr>
+                <th>idNumber</th>
+                <th>dateTime</th>
+                <th>note</th>
+                <th>doctor_name</th>
+                <th>doctor_surname</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="appointment : ${pastPatientAppointments}">
+                <td th:text="${appointment.idNumber}"></td>
+                <td th:text="${appointment.dateTime}"></td>
+                <td th:text="${appointment.note}"></td>
+                <td th:text="${appointment.doctor.name}"></td>
+                <td th:text="${appointment.doctor.surname}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <a th:href="@{/new_appointment}" class="btn btn-info" role="button">Make an appointment</a>
+        </div>
+    </div>
+
+
+</div>
+</body>
+
+</html>
