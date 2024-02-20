@@ -15,7 +15,7 @@ import java.util.Set;
 public interface DoctorEntityMapper {
 
     @Mapping(target = "appointments", ignore = true)
-    @Mapping(target = "calendar", ignore = true)
+//    @Mapping(target = "calendar", ignore = true)
     Doctor mapFromEntity(DoctorEntity entity);
 
     @Mapping(target = "appointments", ignore = true)

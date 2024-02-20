@@ -8,8 +8,7 @@ import org.example.business.AppointmentService;
 import org.example.business.PatientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -17,16 +16,15 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Controller
+@RequestMapping("/patient")
 @AllArgsConstructor
 public class PatientController {
-
-    static final String PATIENT = "/patient";
     private final PatientService patientService;
     private final PatientMapper patientMapper;
     private final AppointmentService appointmentService;
     private final AppointmentMapper appointmentMapper;
 
-    @GetMapping(value = PATIENT)
+    @GetMapping
     public String patientPanelPage(
             @RequestParam(value = "pesel", required = false) String pesel,
             Model model
@@ -57,6 +55,15 @@ public class PatientController {
         model.addAttribute("patient", patient);
         return "patient";
     }
+
+    @DeleteMapping("/{appointmentId}")
+    public String deleteAppointment(
+            @PathVariable("appointmentId") String appointmentId
+    ) {
+        appointmentService.deleteByIdNumber(appointmentId);
+        return "redirect:/patient";
+    }
+
 
     private List<PatientDTO> getAvailablePatients() {
         return patientService.findAvailable().stream()

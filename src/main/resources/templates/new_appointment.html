@@ -8,14 +8,6 @@
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
           crossorigin="anonymous">
     <title>ZajavMED Medical Clinic</title>
-    <script>
-        function showOccupiedDates(){
-            document.getElementById("doctorIds").value ="true";
-            alert("You selected : " + document.getElementById("doctorIds").value);
-            document.deliveryForm.submit();
-
-        }
-    </script>
 
 </head>
 
@@ -28,36 +20,68 @@
         </div>
     </div>
     <br>
-    <form action="#" th:action="@{/new_appointment/new}" method="POST">
-        <p>Appointment for:
+    <form action="#" th:action="@{/new_appointment}" method="GET">
+        <p>Check busy dates for patient:
             <select id="pesels" th:name="pesel">
                 <option th:each="pesel : ${allPesels}" th:value="${pesel}" th:text="${pesel}"></option>
             </select>
         </p>
         <br>
-        <p>Choose a doctor:
-            <select id="doctorIds" th:name="doctorIds">
+        <p>Check busy dates for doctor:
+            <select id="doctorIds" th:name="doctorId">
                 <option th:each="doctorId : ${doctorIds}" th:value="${doctorId}" th:text="${doctorId}"></option>
             </select>
+        <div class="form-group">
+            <input type="submit" value="Show busy dates" name="button"/>
+        </div>
         </p>
-        <br>
+    </form>
+    <br>
+
+    <form action="#" th:action="@{/new_appointment/new}" method="POST">
         <table class="table">
             <thead class="table-dark">
             <tr>
-                <th>idNumber</th>
+                <th>Busy dates</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="appointment : ${futurePatientAppointments}">
-                <td th:text="${appointment.idNumber}"></td>
+            <tr th:each="appointment : ${futureAppointments}">
+                <td th:text="${appointment.dateTime}"></td>
             </tr>
             </tbody>
         </table>
         <br>
+        <p>Make an appointment for patient:
+            <select id="peselsForAppointment" th:name="pesel">
+                <option th:each="pesel : ${allPesels}" th:value="${pesel}" th:text="${pesel}"></option>
+            </select>
+        </p>
+        <br>
+        <p>Make an appointment for doctor:
+            <select id="doctorIdsForAppointment" th:name="doctorId">
+                <option th:each="doctorId : ${doctorIds}" th:value="${doctorId}" th:text="${doctorId}"></option>
+            </select>
+        </p>
+        <br>
         <p>Choose your date: </p>
         <br>
-
-
+        <select id="years" th:name="year">
+            <option th:each="year : ${years}" th:value="${year}" th:text="${year}"></option>
+        </select>
+        <select id="months" th:name="month">
+            <option th:each="month : ${mapOfDaysAndMonthsLeapYear.keySet()}" th:value="${month}" th:text="${month}"></option>
+        </select>
+        <select id="days" th:name="day">
+            <option th:each="day : ${days}" th:value="${day}" th:text="${day}"></option>
+        </select>
+        <select id="hours" th:name="hour">
+            <option th:each="hour : ${hours}" th:value="${hour}" th:text="${hour}"></option>
+        </select>
+        <br>
+        <div class="form-group">
+            <input type="submit" value="Make an appointment" name="button"/>
+        </div>
     </form>
 </div>
 </body>

@@ -10,7 +10,6 @@ import org.example.api.dto.mapper.DiseaseMapper;
 import org.example.api.dto.mapper.DoctorMapper;
 import org.example.business.AppointmentService;
 import org.example.business.DoctorService;
-import org.example.domain.Appointment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -77,7 +76,6 @@ public class DoctorController {
                 .collect(Collectors.toSet());
         model.addAttribute("note", note);
         model.addAttribute("patientDiseases", patientDiseases);
-//        model.addAttribute("appointmentId", appointmentId);
         model.addAttribute("appointmentDTO", appointmentDTO);
         return "appointment_details";
     }

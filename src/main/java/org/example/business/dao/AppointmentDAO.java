@@ -18,5 +18,7 @@ public interface AppointmentDAO {
 
     void makeAnAppointment(Appointment appointment);
 
-    void update(Appointment appointment);
+    Appointment update(Appointment appointment);
+
+    void deleteByIdNumber(String appointmentId);
 }

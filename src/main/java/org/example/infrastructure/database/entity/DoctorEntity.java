@@ -19,23 +19,23 @@ public class DoctorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "doctor_id")
-    private Integer doctorId;
+    Integer doctorId;
 
     @Column(name = "id_number")
-    private String idNumber;
+    String idNumber;
 
     @Column(name = "name")
-    private String name;
+    String name;
 
     @Column(name = "surname")
-    private String surname;
+    String surname;
 
     @Column(name = "specialization")
-    private String specialization;
+    String specialization;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctor")
-    private Set<CalendarEntity> calendar;
+    Set<CalendarEntity> calendar;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctor")
-    private Set<AppointmentEntity> appointments;
+    Set<AppointmentEntity> appointments;
 }

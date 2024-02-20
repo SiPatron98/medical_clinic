@@ -1,8 +1,6 @@
 package org.example.api.dto.mapper;
 
-import org.example.api.dto.DoctorDTO;
 import org.example.api.dto.PatientDTO;
-import org.example.domain.Doctor;
 import org.example.domain.Patient;
 import org.mapstruct.Mapper;
 

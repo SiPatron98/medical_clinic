@@ -13,6 +13,7 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@With
 @Table(name = "calendar")
 public class CalendarEntity {
 

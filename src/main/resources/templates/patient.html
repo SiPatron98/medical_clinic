@@ -55,6 +55,12 @@
                 <td th:text="${appointment.note}"></td>
                 <td th:text="${appointment.doctor.name}"></td>
                 <td th:text="${appointment.doctor.surname}"></td>
+                <td>
+                    <form action="#" th:action="@{/patient/{appointmentId}(appointmentId=${appointment.idNumber})}"
+                          th:method="DELETE">
+                        <button type="submit" class="btn btn-danger">Delete appointment</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

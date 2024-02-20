@@ -37,7 +37,7 @@ public class PatientEntity {
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
-    private AddressEntity address;
+    AddressEntity address;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
     Set<DiseaseEntity> diseases;

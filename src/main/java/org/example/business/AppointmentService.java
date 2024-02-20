@@ -57,7 +57,7 @@ public class AppointmentService {
         Set<Calendar> calendar = appointment.getDoctor().getCalendar();
 
         for (Calendar date : calendar) {
-            if (appointmentDateTime.equals(date.getDateTime())) {
+            if (appointmentDateTime.toLocalDateTime().equals(date.getDateTime().toLocalDateTime())) {
                 throw new ProcessingException("This date is not available.");
             }
         }
@@ -69,7 +69,12 @@ public class AppointmentService {
     }
 
     @Transactional
-    public void update(Appointment appointment) {
-        appointmentDAO.update(appointment);
+    public Appointment update(Appointment appointment) {
+        return appointmentDAO.update(appointment);
+    }
+
+    @Transactional
+    public void deleteByIdNumber(String appointmentId) {
+        appointmentDAO.deleteByIdNumber(appointmentId);
     }
 }

@@ -3,9 +3,11 @@ server:
   servlet:
     context-path: /medical_clinic
 
+api:
+  covid:
+    url: https://www.hpb.health.gov.lk
+
 spring:
-  security:
-    enabled: false
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver

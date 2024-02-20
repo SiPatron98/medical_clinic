@@ -16,6 +16,7 @@ public class PatientRepository implements PatientDAO {
 
     private final PatientJpaRepository patientJpaRepository;
     private final PatientEntityMapper patientEntityMapper;
+
     @Override
     public List<Patient> findAvailable() {
         return patientJpaRepository.findAll().stream()
@@ -26,7 +27,7 @@ public class PatientRepository implements PatientDAO {
     @Override
     public Optional<Patient> findByPesel(String pesel) {
         return patientJpaRepository.findByPesel(pesel)
-                .map(patientEntityMapper::mapFromEntity);
+                .map(patientEntityMapper::mapFromEntityWithAddressAndDiseases);
     }
 
     @Override

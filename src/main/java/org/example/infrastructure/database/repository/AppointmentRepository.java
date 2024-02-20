@@ -2,20 +2,18 @@ package org.example.infrastructure.database.repository;
 
 import lombok.AllArgsConstructor;
 import org.example.business.dao.AppointmentDAO;
-import org.example.domain.Address;
 import org.example.domain.Appointment;
 import org.example.domain.Calendar;
 import org.example.domain.Disease;
-import org.example.domain.exception.ProcessingException;
 import org.example.infrastructure.database.entity.*;
 import org.example.infrastructure.database.repository.jpa.AppointmentJpaRepository;
 import org.example.infrastructure.database.repository.mapper.AppointmentEntityMapper;
 import org.springframework.stereotype.Repository;
 
-import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -26,7 +24,6 @@ public class AppointmentRepository implements AppointmentDAO {
     private final AppointmentJpaRepository appointmentJpaRepository;
     private final AppointmentEntityMapper appointmentEntityMapper;
 
-    static AtomicInteger idOfVisit = new AtomicInteger(4);
     @Override
     public List<Appointment> findAvailable() {
         return appointmentJpaRepository.findAll().stream()
@@ -56,12 +53,12 @@ public class AppointmentRepository implements AppointmentDAO {
     @Override
     public void save(Appointment appointment) {
         appointmentJpaRepository.saveAndFlush(AppointmentEntity.builder()
-                        .appointmentId(appointment.getAppointmentId())
-                        .idNumber(appointment.getIdNumber())
-                        .dateTime(appointment.getDateTime())
-                        .note(appointment.getNote())
-                        .doctor(buildDoctorEnity(appointment))
-                        .patient(buildPatientEntity(appointment))
+                .appointmentId(appointment.getAppointmentId())
+                .idNumber(appointment.getIdNumber())
+                .dateTime(appointment.getDateTime())
+                .note(appointment.getNote())
+                .doctor(buildDoctorEnity(appointment))
+                .patient(buildPatientEntity(appointment))
                 .build());
     }
 
@@ -70,23 +67,29 @@ public class AppointmentRepository implements AppointmentDAO {
     public void makeAnAppointment(Appointment appointment) {
 
         appointmentJpaRepository.saveAndFlush(AppointmentEntity.builder()
-                        .idNumber("00" + idOfVisit.addAndGet(1))
-                        .dateTime(appointment.getDateTime())
-                        .patient(buildPatientEntity(appointment))
-                        .doctor(buildDoctorEnity(appointment))
+                .idNumber(generateIdNumber())
+                .dateTime(appointment.getDateTime())
+                .patient(buildPatientEntity(appointment))
+                .doctor(buildDoctorEnity(appointment))
                 .build());
-
     }
 
     @Override
-    public void update(Appointment appointment) {
+    public Appointment update(Appointment appointment) {
         AppointmentEntity entity = appointmentJpaRepository.findByIdNumber(appointment.getIdNumber());
         entity.setNote(appointment.getNote());
         appointmentJpaRepository.saveAndFlush(entity);
+        return appointment;
+    }
+
+    @Override
+    public void deleteByIdNumber(String appointmentId) {
+        appointmentJpaRepository.deleteByIdNumber(appointmentId);
     }
 
     private PatientEntity buildPatientEntity(Appointment appointment) {
         return PatientEntity.builder()
+                .patientId(appointment.getPatient().getPatientId())
                 .name(appointment.getPatient().getName())
                 .surname(appointment.getPatient().getSurname())
                 .pesel(appointment.getPatient().getPesel())
@@ -113,6 +116,7 @@ public class AppointmentRepository implements AppointmentDAO {
 
     private DoctorEntity buildDoctorEnity(Appointment appointment) {
         return DoctorEntity.builder()
+                .doctorId(appointment.getDoctor().getDoctorId())
                 .idNumber(appointment.getDoctor().getIdNumber())
                 .name(appointment.getDoctor().getName())
                 .surname(appointment.getDoctor().getSurname())
@@ -130,5 +134,9 @@ public class AppointmentRepository implements AppointmentDAO {
                         .build())
         );
         return calendarEntitySet;
+    }
+
+    private String generateIdNumber() {
+        return UUID.randomUUID().toString().substring(0, 31);
     }
 }

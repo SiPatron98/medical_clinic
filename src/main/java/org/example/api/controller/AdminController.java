@@ -1,21 +1,17 @@
 package org.example.api.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.api.dto.DoctorDTO;
 import org.example.api.dto.PatientDTO;
 import org.example.api.dto.mapper.DoctorMapper;
 import org.example.api.dto.mapper.PatientMapper;
-import org.example.business.AddressService;
 import org.example.business.DoctorService;
 import org.example.business.PatientService;
-import org.example.domain.Address;
 import org.example.domain.Doctor;
 import org.example.domain.Patient;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -44,7 +40,7 @@ public class AdminController {
             @RequestParam(value = "name") String name,
             @RequestParam(value = "surname") String surname,
             @RequestParam(value = "specialization") String specialization
-            ) {
+    ) {
         DoctorDTO doctorDTO = DoctorDTO.builder()
                 .idNumber(idNumber)
                 .name(name)
@@ -59,13 +55,14 @@ public class AdminController {
 
     @PostMapping("/add_patient")
     public String addPatient(
+            @Valid @ModelAttribute("patientDTO") PatientDTO patientDTO,
             @RequestParam(value = "pesel") String pesel,
             @RequestParam(value = "name") String name,
             @RequestParam(value = "surname") String surname,
             @RequestParam(value = "phone") String phone,
             @RequestParam(value = "email") String email
     ) {
-        PatientDTO patientDTO = PatientDTO.builder()
+        patientDTO = PatientDTO.builder()
                 .pesel(pesel)
                 .name(name)
                 .surname(surname)
@@ -98,13 +95,4 @@ public class AdminController {
                 .toList();
 
     }
-
-//    private Address buildDefaultAddress() {
-//        return Address.builder()
-//                .country("Polska")
-//                .city("Inowrocław")
-//                .postalCode("88-100")
-//                .street("Malinowa")
-//                .build();
-//    }
 }
