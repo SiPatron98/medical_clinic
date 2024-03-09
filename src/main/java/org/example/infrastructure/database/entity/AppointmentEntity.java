@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.OffsetDateTime;
 
+@With
 @Getter
 @Setter
 @EqualsAndHashCode(of = "idNumber")

@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface CovidDAO {
 
-    List<CovidData> getAllData();
+    CovidData getDataByDate(LocalDate localDate);
 
 }

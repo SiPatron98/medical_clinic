@@ -27,11 +27,11 @@ public class PatientService {
 
     @Transactional
     public Patient findPatient(String pesel) {
-        Optional<Patient> doctor = patientDAO.findByPesel(pesel);
-        if (doctor.isEmpty()) {
+        Optional<Patient> patient = patientDAO.findByPesel(pesel);
+        if (patient.isEmpty()) {
             throw new NotFoundException("Could not find patient by pesel: [%s]".formatted(pesel));
         }
-        return doctor.get();
+        return patient.get();
     }
 
     @Transactional

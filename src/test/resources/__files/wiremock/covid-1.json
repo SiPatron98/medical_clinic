@@ -1,0 +1,15 @@
+{
+  "data": {
+    "date": "2020-03-14",
+    "last_update": "2020-03-14 22:53:02",
+    "confirmed": 103,
+    "confirmed_diff": 35,
+    "deaths": 3,
+    "deaths_diff": 1,
+    "recovered": 0,
+    "recovered_diff": 0,
+    "active": 100,
+    "active_diff": 34,
+    "fatality_rate": 0.0291
+  }
+}

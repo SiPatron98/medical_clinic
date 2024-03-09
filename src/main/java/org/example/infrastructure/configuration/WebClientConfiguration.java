@@ -1,6 +1,8 @@
 package org.example.infrastructure.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.infrastructure.covid.ApiClient;
+import org.example.infrastructure.covid.api.ReportApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +36,18 @@ public class WebClientConfiguration {
         return WebClient.builder()
             .exchangeStrategies(strategies)
             .build();
+    }
+
+    @Bean
+    public ApiClient apiClient(final WebClient webClient) {
+        ApiClient apiClient = new ApiClient(webClient);
+        apiClient.setBasePath(covidUrl);
+        return apiClient;
+    }
+
+    @Bean
+    public ReportApi reportApi(final ApiClient apiClient) {
+        return new ReportApi(apiClient);
     }
 
 }

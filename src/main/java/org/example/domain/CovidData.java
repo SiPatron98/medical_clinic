@@ -4,12 +4,16 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@With
 @Value
 @Builder
-@EqualsAndHashCode(of = "localDate")
-@ToString(of = {"localDate", "pcrTestsCount"})
 public class CovidData {
     LocalDate localDate;
-    Integer pcrTestsCount;
+    Integer confirmedDiff;
+    Integer deathsDiff;
+    Integer recoveredDiff;
+    Integer activeDiff;
+    Integer confirmed;
+    Integer deaths;
+    Integer recovered;
+    Integer active;
 }

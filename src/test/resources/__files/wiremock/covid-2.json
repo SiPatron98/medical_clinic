@@ -1,0 +1,14 @@
+{
+  "data": {
+    "date": "2021-02-09",
+    "last_update": "2021-02-10 05:22:41",
+    "confirmed": 1556685,
+    "confirmed_diff": 3999,
+    "deaths": 39360,
+    "deaths_diff": 228,
+    "recovered": 1317474,
+    "recovered_diff": 4618,
+    "active": 199851,
+    "active_diff": -847,
+    "fatality_rate": 0.0253
+  },

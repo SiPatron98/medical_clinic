@@ -5,7 +5,7 @@ server:
 
 api:
   covid:
-    url: https://www.hpb.health.gov.lk
+    url: https://covid-api.com/api/
 
 spring:
   datasource:

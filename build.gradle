@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
     id "org.openapi.generator" version "${openapiGeneratorVersion}"
+    id 'jacoco'
 }
 
 group = 'pl.zajavka'
@@ -101,8 +102,25 @@ compileJava.dependsOn tasks.openApiGenerate
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport // report is always generated after tests run
     testLogging {
         events "passed", "skipped", "failed"
+    }
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    "org/example/infrastructure/covid/**",
+                    "org/example/domain/**",
+                    "org/example/api/dto/**",
+                    "org/example/infrastructure/database/entity/**",
+                    "org/example/infrastructure/database/repository/mapper/**",
+                    "org/example/infrastructure/security/**"
+            ])
+        }))
     }
 }
 
